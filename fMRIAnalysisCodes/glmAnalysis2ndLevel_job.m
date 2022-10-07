@@ -1,0 +1,75 @@
+%-----------------------------------------------------------------------
+% Job saved on 23-Apr-2021 12:22:53 by cfg_util (rev $Rev: 6460 $)
+% spm SPM - SPM12 (6685)
+% cfg_basicio BasicIO - Unknown
+%-----------------------------------------------------------------------
+
+matlabbatch{1}.spm.stats.factorial_design.dir = {'F:\xinyuan\GAERS\fmri\glmCodes\mtsnr-snrmratrGd_SPM'};
+matlabbatch{1}.spm.stats.factorial_design.des.t1.scans = '<UNDEFINED>';
+matlabbatch{1}.spm.stats.factorial_design.cov = struct('c', {}, 'cname', {}, 'iCFI', {}, 'iCC', {});
+matlabbatch{1}.spm.stats.factorial_design.multi_cov = struct('files', {}, 'iCFI', {}, 'iCC', {});
+matlabbatch{1}.spm.stats.factorial_design.masking.tm.tm_none = 1;
+matlabbatch{1}.spm.stats.factorial_design.masking.im = 0;
+% matlabbatch{1}.spm.stats.factorial_design.masking.em = {''};
+matlabbatch{1}.spm.stats.factorial_design.masking.em = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_IMG_GM.nii,1'};
+matlabbatch{1}.spm.stats.factorial_design.globalc.g_omit = 1;
+matlabbatch{1}.spm.stats.factorial_design.globalm.gmsca.gmsca_no = 1;
+matlabbatch{1}.spm.stats.factorial_design.globalm.glonorm = 1;
+matlabbatch{2}.spm.stats.fmri_est.spmmat = {'F:\xinyuan\GAERS\fmri\glmCodes\mtsnr-snrmratrGd_SPM\SPM.mat'};
+matlabbatch{2}.spm.stats.fmri_est.write_residuals = 0;
+matlabbatch{2}.spm.stats.fmri_est.method.Classical = 1;
+matlabbatch{3}.spm.stats.con.spmmat = {'F:\xinyuan\GAERS\fmri\glmCodes\mtsnr-snrmratrGd_SPM\SPM.mat'};
+matlabbatch{3}.spm.stats.con.consess{1}.tcon.name = 'sz';
+matlabbatch{3}.spm.stats.con.consess{1}.tcon.weights = 1;
+matlabbatch{3}.spm.stats.con.consess{1}.tcon.sessrep = 'none';
+matlabbatch{3}.spm.stats.con.consess{2}.tcon.name = '-sz';
+matlabbatch{3}.spm.stats.con.consess{2}.tcon.weights = -1;
+matlabbatch{3}.spm.stats.con.consess{2}.tcon.sessrep = 'none';
+matlabbatch{3}.spm.stats.con.delete = 1;
+matlabbatch{4}.spm.stats.results.spmmat = {'F:\xinyuan\GAERS\fmri\glmCodes\mtsnr-snrmratrGd_SPM\SPM.mat'};
+matlabbatch{4}.spm.stats.results.conspec(1).titlestr = '';
+matlabbatch{4}.spm.stats.results.conspec(1).contrasts = 1;
+matlabbatch{4}.spm.stats.results.conspec(1).threshdesc = 'FDR';
+matlabbatch{4}.spm.stats.results.conspec(1).thresh = 0.05;
+matlabbatch{4}.spm.stats.results.conspec(1).extent = 10;
+matlabbatch{4}.spm.stats.results.conspec(1).conjunction = 1;
+% matlabbatch{4}.spm.stats.results.conspec(1).mask.none = 1;
+% matlabbatch{4}.spm.stats.results.conspec(1).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\Template_ROI.nii,1'};
+matlabbatch{4}.spm.stats.results.conspec(1).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_IMG_GM.nii,1'};
+matlabbatch{4}.spm.stats.results.conspec(1).mask.image.mtype = 0;
+matlabbatch{4}.spm.stats.results.conspec(2).titlestr = '';
+matlabbatch{4}.spm.stats.results.conspec(2).contrasts = 2;
+matlabbatch{4}.spm.stats.results.conspec(2).threshdesc = 'FDR';
+matlabbatch{4}.spm.stats.results.conspec(2).thresh = 0.05;
+matlabbatch{4}.spm.stats.results.conspec(2).extent = 10;
+matlabbatch{4}.spm.stats.results.conspec(2).conjunction = 1;
+% matlabbatch{4}.spm.stats.results.conspec(2).mask.none = 1;
+% matlabbatch{4}.spm.stats.results.conspec(2).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_ROI.nii,1'};
+matlabbatch{4}.spm.stats.results.conspec(2).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_IMG_GM.nii,1'};
+matlabbatch{4}.spm.stats.results.conspec(2).mask.image.mtype = 0;
+matlabbatch{4}.spm.stats.results.units = 1;
+matlabbatch{4}.spm.stats.results.print = false;
+matlabbatch{4}.spm.stats.results.write.tspm.basename = 'FDR';
+matlabbatch{5}.spm.stats.results.spmmat = {'F:\xinyuan\GAERS\fmri\glmCodes\mtsnr-snrmratrGd_SPM\SPM.mat'};
+matlabbatch{5}.spm.stats.results.conspec(1).titlestr = '';
+matlabbatch{5}.spm.stats.results.conspec(1).contrasts = 1;
+matlabbatch{5}.spm.stats.results.conspec(1).threshdesc = 'FWE';
+matlabbatch{5}.spm.stats.results.conspec(1).thresh = 0.05;
+matlabbatch{5}.spm.stats.results.conspec(1).extent = 0;
+matlabbatch{5}.spm.stats.results.conspec(1).conjunction = 1;
+% matlabbatch{4}.spm.stats.results.conspec(1).mask.none = 1;
+% matlabbatch{5}.spm.stats.results.conspec(1).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_ROI.nii,1'};
+matlabbatch{5}.spm.stats.results.conspec(1).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_IMG_GM.nii,1'};
+matlabbatch{5}.spm.stats.results.conspec(1).mask.image.mtype = 0;
+matlabbatch{5}.spm.stats.results.conspec(2).titlestr = '';
+matlabbatch{5}.spm.stats.results.conspec(2).contrasts = 2;
+matlabbatch{5}.spm.stats.results.conspec(2).threshdesc = 'FWE';
+matlabbatch{5}.spm.stats.results.conspec(2).thresh = 0.05;
+matlabbatch{5}.spm.stats.results.conspec(2).extent = 0;
+matlabbatch{5}.spm.stats.results.conspec(2).conjunction = 1;
+% matlabbatch{5}.spm.stats.results.conspec(2).mask.none = 1;
+matlabbatch{5}.spm.stats.results.conspec(2).mask.image.name = {'F:\xinyuan\GAERS\fmri\glmCodes\VOI\Template_IMG_GM.nii,1'};
+matlabbatch{5}.spm.stats.results.conspec(2).mask.image.mtype = 0;
+matlabbatch{5}.spm.stats.results.units = 1;
+matlabbatch{5}.spm.stats.results.print = false;
+matlabbatch{5}.spm.stats.results.write.tspm.basename = 'FWE';
