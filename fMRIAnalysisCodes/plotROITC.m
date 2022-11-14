@@ -1,4 +1,4 @@
-function [VOIMeanOn, VOIMeanOff, VOIAllBlMean, VOIAllSzMean] = plotROITC_090822(thisAni,savepath,VOIname,nSecSzBl,nSecSzBloffset)
+function [VOIMeanOn, VOIMeanOff, VOIAllBlMean, VOIAllSzMean] = plotROITC(thisAni,savepath,VOIname,nSecSzBl,nSecSzBloffset)
 % Plot ROI timecourse
 % Xinyuan Zheng - 09/08/2022, Jingjing Li
 % 
@@ -25,7 +25,7 @@ nSzOn = length(onsetDataAll);
 nSzOff = length(offsetDataAll);
 
 % VOI template
-VOIMask = load_nii(['F:\xinyuan\GAERS\fmri\glmCodes\VOI\Cian_VOI\' VOIname '.nii']);
+VOIMask = load_nii(['F:\xinyuan\GAERS\fmri\glmCodes\VOI\VOI_brain_regions' VOIname '.nii']);
 VOIMask = logical(VOIMask.img);
 VOIMask = repmat(VOIMask,1,1,1,preszLen+szAnalysisTime);
 
