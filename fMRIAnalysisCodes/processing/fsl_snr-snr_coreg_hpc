@@ -1,0 +1,122 @@
+#!/bin/bash
+#This is a bash script to use FSL's FLIRT tool
+#for structural-structural coregistration.
+#Written by Zachary Kratochvil May 2018
+#Edits made by Peter Vincent March 2019
+set -e
+#. ${FSLDIR}/etc/fslconf/fsl.sh
+#runs=$1
+
+#the parent path
+par_path="/gpfs/ysm/project/prv4/GAERS_fMRI/PV_Autumn_2018_"
+#location of folder containing data from previous step
+input_funct_path=${par_path}"/mratrGd"
+#location of folder to save output of this step
+output_funct_path=${par_path}"/snr-snrmratrGd"
+#location of input structural images
+input_struct_path=${par_path}"/mratrGd_SNR_Maps_Baseline_10_10_20"
+#location to save registered structural images
+output_struct_path=${par_path}"/snr-snrmratrGd_SNR_Maps_Baseline_Structural"
+#reference structural image path
+ref_path=${par_path}"/mratrGd_SNR_Maps_Baseline_10_10_20/SNR.nii"
+#the prefix to add to coregistered images
+output_prefix="snr-snr"
+#re-run registration on structurals or simply re-apply it to the functionals?
+run_reg=true
+apply_reg=true
+
+#create the appropriate output directories for the requested step(s)
+if ${apply_reg}; then 
+	rm -fr ${output_funct_path}
+	mkdir ${output_funct_path}
+fi
+if ${run_reg}; then
+	rm -fr ${output_struct_path}
+	mkdir ${output_struct_path}
+fi
+
+#loop through input files
+run_dirs=(${input_funct_path}/runID_*)
+for funct_run_path in ${run_dirs[@]}; do
+#for run in ${runs}; do
+#	funct_run_path=${run_dirs[${run}]}
+    echo ${funct_run_path}
+
+	#prepare arguments relevant to both steps: registration and application
+	transform_name=("fsl_"${output_prefix}"_transform_matrix.mat")
+	#extract the run folder from the path
+	for (( i = ${#funct_run_path}; i >= 0; i-- )); do
+		if [[ "${funct_run_path:${i}:1}" == "/" ]]; then
+			run_folder=${funct_run_path:${i}+1:1000}
+			break
+		fi
+	done
+
+	#create output run folders
+	if ${run_reg}; then
+		mkdir ${output_struct_path}"/"${run_folder}
+	fi
+	if ${apply_reg}; then
+		mkdir ${output_funct_path}"/"${run_folder}
+	fi
+
+	#run the structural to structural registration
+	if ${run_reg}; then
+
+		#locate the input structural image for this run and check that it exists
+		struct_image=(${input_struct_path}/${run_folder}/*.nii)
+		if [ $(echo ${struct_image} | grep \* | wc -c) -gt 0 ]; then
+			echo "Input structural image not found for "${input_struct_path}"/"${run_folder}". Skipping." 1>&2
+			continue
+		fi
+
+		#extract the file name from struct_image
+		for (( i = ${#struct_image}; i >= 0; i-- )); do
+			if [[ "${struct_image:${i}:1}" == "/" ]]; then
+				struct_image_name=${struct_image:${i}+1:1000}
+				break
+			fi
+		done
+		reg_struct_image=(${output_prefix}${struct_image_name})
+
+		#prepare arguments for FLIRT
+		in_arg=(${struct_image})
+		out=(${output_struct_path}"/"${run_folder}"/"${reg_struct_image})
+		omat=(${output_struct_path}"/"${run_folder}"/"${transform_name})
+
+		#run FSL's FLIRT coregistration tool and unzip output image
+		flirt -in ${in_arg} -ref ${ref_path} -out ${out} -omat ${omat} -bins 256 -cost corratio -searchrx -30 30 -searchry -30 30 -searchrz -30 30 -dof 12 -interp sinc -sincwidth 7 -sincwindow hanning
+		gunzip -f ${output_struct_path}"/"${run_folder}"/"${reg_struct_image}".gz"
+	fi
+
+	#apply the registration to the functional images
+	if ${apply_reg}; then
+
+		#find images to apply transformation to
+		funct_images=(${input_funct_path}/${run_folder}/*.nii)
+
+		#loop through functional images, applying transformation and unzipping from .nii.gz to .nii
+		for image in ${funct_images[@]}; do
+
+			#extract the name of the image file
+			for (( i = ${#image}; i >= 0; i-- )); do
+				if [[ "${image:${i}:1}" == "/" ]]; then
+					image_name=${image:${i}+1:1000}
+					break
+				fi
+			done
+
+			#prepare parameters for FLIRT
+			new_image=(${output_prefix}${image_name})
+
+			ref=(${image})
+			in_arg=(${image})
+			tform=(${output_struct_path}"/"${run_folder}"/"${transform_name})
+			out=(${output_funct_path}"/"${run_folder}"/"${new_image})
+			
+			#run FSL's FLIRT tool, applying the existing structural affine transform to the functional images 
+			flirt -ref ${ref} -in ${in_arg} -applyxfm -init ${tform} -out ${out}
+			gunzip -f ${out}".gz"
+		done
+	fi
+done
